@@ -27,6 +27,8 @@ fn main() {
         .reduce(|acc, item| format!("{} {}", acc, item))
         .unwrap_or_default();
 
+    let full = matches.get_flag("full");
+
     let config = Config::default();
     let generated_config = encre_css::generate([r#"<div class=""></div>"#], &config);
     let generated = encre_css::generate(
@@ -34,6 +36,13 @@ fn main() {
         &config,
     );
 
-    let diff = generated.replace(generated_config.as_str(), "");
-    println!("{}", diff.trim());
+    match full {
+        true => {
+            println!("{}", generated.trim());
+        }
+        false => {
+            let diff = generated.replace(generated_config.as_str(), "");
+            println!("{}", diff.trim());
+        }
+    }
 }
