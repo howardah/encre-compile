@@ -1,0 +1,9 @@
+[package]
+name = "encre-compile"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = "4.5.51"
+encre-css = "0.19.1"
+encre-css-typography = "0.5.1"
