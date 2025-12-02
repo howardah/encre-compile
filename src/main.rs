@@ -1,5 +1,5 @@
 use clap::{Arg, ArgAction, Command};
-use encre_css::Config;
+use encre_compile::add_encre;
 
 fn main() {
     let matches = Command::new("encre-compile")
@@ -28,21 +28,5 @@ fn main() {
         .unwrap_or_default();
 
     let full = matches.get_flag("full");
-
-    let config = Config::default();
-    let generated_config = encre_css::generate([r#"<div class=""></div>"#], &config);
-    let generated = encre_css::generate(
-        [format!("<div class=\"{}\"></div>", classes).as_str()],
-        &config,
-    );
-
-    match full {
-        true => {
-            println!("{}", generated.trim());
-        }
-        false => {
-            let diff = generated.replace(generated_config.as_str(), "");
-            println!("{}", diff.trim());
-        }
-    }
+    println!("{}", add_encre(vec![classes], full));
 }
